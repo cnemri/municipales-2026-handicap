@@ -416,12 +416,12 @@ export default function Dashboard() {
                     <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                          <Pie data={pieData} cx="50%" cy="50%" labelLine={false} label={({ percent }) => `${(percent * 100).toFixed(0)}%`} outerRadius={120} dataKey="value">
+                          <Pie data={pieData} cx="50%" cy="50%" labelLine={false} label={({ percent }) => percent !== undefined ? `${(percent * 100).toFixed(0)}%` : ""} outerRadius={120} dataKey="value">
                             {pieData.map((entry, index) => (
                               <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                           </Pie>
-                          <RechartsTooltip formatter={(value: number) => [`${value} programmes`, "Total"]} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                          <RechartsTooltip formatter={(value: any) => [`${value} programmes`, "Total"]} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
                           <Legend verticalAlign="bottom" height={36} wrapperStyle={{ paddingTop: '20px', fontWeight: '600', fontSize: '14px' }}/>
                         </PieChart>
                       </ResponsiveContainer>
@@ -437,7 +437,7 @@ export default function Dashboard() {
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                           <XAxis dataKey="name" tick={{fontSize: 12, fontWeight: 600, fill: '#64748b'}} tickLine={false} axisLine={false} />
                           <YAxis tick={{fontSize: 12, fill: '#64748b'}} unit="%" tickLine={false} axisLine={false} />
-                          <RechartsTooltip cursor={{fill: '#f8fafc'}} formatter={(value: number) => [`${value}%`, "Taux"]} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}/>
+                          <RechartsTooltip cursor={{fill: '#f8fafc'}} formatter={(value: any) => [`${value}%`, "Taux"]} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}/>
                           <Bar dataKey="Percentage" fill={BRAND_BLUE} radius={[6, 6, 0, 0]} maxBarSize={60} />
                         </BarChart>
                       </ResponsiveContainer>
@@ -487,25 +487,25 @@ export default function Dashboard() {
                             components={{
                               h3: ({node, ...props}) => { void node; return <h3 className="text-xl font-black text-slate-800 mt-8 mb-5 flex items-center" {...props} />; },
                               ul: ({node, ...props}) => { void node; return <ul className="flex flex-col gap-4 my-6" {...props} />; },
-                              li: ({node, ...props}) => {
+                              li: ({node, children, ...props}) => {
                                 void node;
                                 return (
-                                <li className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 flex items-start group">
+                                <li className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 flex items-start group" {...props}>
                                   <div className="bg-slate-50 text-[#0055A4] p-2.5 rounded-xl mr-4 border border-slate-100 group-hover:bg-[#0055A4] group-hover:text-white transition-colors shrink-0 mt-0.5">
                                     <CheckCircle2 className="w-5 h-5" />
                                   </div>
-                                  <div className="text-slate-700 text-sm leading-relaxed flex-1 [&>strong]:text-slate-900 [&>strong]:font-black" {...props} />
+                                  <div className="text-slate-700 text-sm leading-relaxed flex-1 [&>strong]:text-slate-900 [&>strong]:font-black">{children}</div>
                                 </li>
                               );},
                               p: ({node, ...props}) => { void node; return <p className="text-slate-600 text-base leading-relaxed mb-4" {...props} />; },
-                              blockquote: ({node, ...props}) => {
+                              blockquote: ({node, children, ...props}) => {
                                 void node;
                                 return (
-                                <blockquote className="relative bg-gradient-to-br from-blue-50 to-white border-l-4 border-[#0055A4] p-8 rounded-r-2xl my-8 shadow-sm overflow-hidden">
+                                <blockquote className="relative bg-gradient-to-br from-blue-50 to-white border-l-4 border-[#0055A4] p-8 rounded-r-2xl my-8 shadow-sm overflow-hidden" {...props}>
                                   <div className="absolute -top-4 -right-4 text-blue-100/50 transform rotate-12 pointer-events-none">
                                     <Quote className="w-32 h-32" />
                                   </div>
-                                  <div className="relative z-10 text-blue-900 font-medium text-lg leading-relaxed italic" {...props} />
+                                  <div className="relative z-10 text-blue-900 font-medium text-lg leading-relaxed italic">{children}</div>
                                 </blockquote>
                               );},
                               strong: ({node, ...props}) => { void node; return <strong className="font-black text-[#0055A4]" {...props} />; }
@@ -637,10 +637,10 @@ export default function Dashboard() {
                     <div className="flex-1 min-h-[160px]">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                          <Pie data={modalPieData} cx="50%" cy="50%" labelLine={false} label={({ percent }) => `${(percent * 100).toFixed(0)}%`} outerRadius={60} dataKey="value">
+                          <Pie data={modalPieData} cx="50%" cy="50%" labelLine={false} label={({ percent }) => percent !== undefined ? `${(percent * 100).toFixed(0)}%` : ""} outerRadius={60} dataKey="value">
                             {modalPieData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                           </Pie>
-                          <RechartsTooltip formatter={(value: number) => [`${value} progs`, "Total"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 4px rgb(0 0 0 / 0.1)', fontSize: '12px' }} />
+                          <RechartsTooltip formatter={(value: any) => [`${value} progs`, "Total"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 4px rgb(0 0 0 / 0.1)', fontSize: '12px' }} />
                           <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: '11px', fontWeight: '600' }}/>
                         </PieChart>
                       </ResponsiveContainer>
@@ -654,7 +654,7 @@ export default function Dashboard() {
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                           <XAxis dataKey="name" tick={{fontSize: 10, fontWeight: 600, fill: '#64748b'}} tickLine={false} axisLine={false} />
                           <YAxis tick={{fontSize: 10, fill: '#64748b'}} unit="%" tickLine={false} axisLine={false} />
-                          <RechartsTooltip cursor={{fill: '#f8fafc'}} formatter={(value: number) => [`${value}%`, "Taux"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 4px rgb(0 0 0 / 0.1)', fontSize: '12px' }}/>
+                          <RechartsTooltip cursor={{fill: '#f8fafc'}} formatter={(value: any) => [`${value}%`, "Taux"]} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 4px rgb(0 0 0 / 0.1)', fontSize: '12px' }}/>
                           <Bar dataKey="Percentage" fill={BRAND_BLUE} radius={[4, 4, 0, 0]} maxBarSize={30} />
                         </BarChart>
                       </ResponsiveContainer>
